@@ -1,0 +1,41 @@
+09. 콜렉션(Collection)
+- 팁
+    - 기본적으로 Immutable을 사용하는 것을 권장
+    - 리스트 -> (10, 20, 30)
+    - 코드 500줄
+    - 리스트 사용
+
+- 크기 고정되어 있지 않음
+- 변경가능 여부
+    - Immutable
+    - Mutable
+- 분류
+    - List
+        - Immutable, Mutable
+    - Map
+        - Immutable, Mutable
+    - Set
+        - Immutable, Mutable
+
+- List
+    - Immutable
+        - listOf<자료형>(값1, 값2, 값3)
+        - val numbers = listOf<Int>(1, 2, 3)
+    - Mutable
+        - mutableListOf<자료형>(값1, 값2, 값3)
+        - val numbers = mutable<Int>(1, 2, 3)
+
+- Set
+    - 집합 -> 중복값이 존재하지 않음
+    - Immutable
+        - setOf<자료형>(값1, 값2, 값3, 값1, 값1) -> setOf<자료형>(값1, 값2, 값3)
+    - Mutable
+        - mutableSetOf<자료형>(값1, 값2, 값3, 값1, 값1)
+
+- Map
+    - key-value쌍으로 저장
+    - Immutable
+        - mapOf<자료형, 자료형>(키1 to 벨류1, 키2 to 벨류2)
+        - mapOf<String, String>("1" to "하나", "2" to "둘")
+    - Mutable
+        - mutableMapOf<자료형, 자료형>(키1 to 벨류1, 키2 to 벨류2)

@@ -1,0 +1,35 @@
+10. Iterable
+- 이터러블, 아이터러블
+- 반복 가능한
+
+- Collection
+    - List
+    - Set
+    - Map
+    - mutableList
+    - (1, 2, 3, 4)
+    - (1)
+
+- Array
+    - (1, 2, 3, 4)
+    - (1)
+
+- Progression
+    - 시작점과 끝점이 있고, 범위를 정할 수 있음
+    - 구간
+        - 구간 n: 반복을 할 때 n씩 이동
+        - 구간 1 -> Range
+    - 1..10 step 2
+    - 10 downTo 1 step 2
+    - (1..10).reversed() step 5
+
+- Range
+    - 구간이 1인 Progression
+    - 1..10 -> 1부터 10까지
+    - 1.rangeTo(10) -> 1부터 10까지
+    - 1 until 10 -> 1부터 9까지
+
+- 닫힌구간/열린구간
+    - 닫힌구간: 시작점/끝점을 포함
+    - 열린구간: 시작점/끝점을 제외
+

@@ -1,0 +1,12 @@
+11. 반복문 for
+
+// 기본 format
+    for (변수명 in 범위) {
+        // 반목문 내용
+    }
+
+val NUMBERS = 1..0
+for (i in NUMBERS) {
+}
+
+// forEach
