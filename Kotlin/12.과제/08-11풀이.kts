@@ -20,10 +20,8 @@ fun sum7Between1and100(): Int {
 
 //4. 100 보다 작은 숫자를 넣어주면, 1씩 증가를 시키고 100 이 되면 종료되는 함수를 만드시오
 fun plus1until100(NUM: Int): Unit {
-    var n = NUM
-    while (n < 100) {
-        n++
-    }
+    var n: Int = NUM
+    while (n < 100) n++
 
     return
 }
@@ -31,26 +29,33 @@ fun plus1until100(NUM: Int): Unit {
 //5. 시험 성적 리스트 [70,71,72,77,78,79,80,82,90,99]
 //    와 동일한 크기의 배열을 만들고, 합격이면 true, 불합격이면 false를 담는 함수를 만드시오
 //    (80점 이상 부터 합격, 정답 예시 (False,False,...))
-fun passOrFail(ARR: IntArray): BooleanArray {
-    val RESULT: BooleanArray = BooleanArray(ARR.size, {false})
-    for (i in 0 until ARR.size) {
-        if (ARR.get(i) >= 80) RESULT.set(i, true)
+fun passOrFail(ARR: List<Int>): BooleanArray {
+    val RESULT = BooleanArray(ARR.size, {false})
+    ARR.forEachIndexed { index, score ->
+        if (score >= 80) RESULT.set(index, true)
     }
 
     return RESULT
+}
+val RESULT = passOrFail(listOf<Int>(70,71,72,77,78,79,80,82,90,99))
+RESULT.forEach {
+    println(it)
 }
 
 //6. 두개의 주사위를 던졌을때, 눈의 합이 6이 되는 모든 경우의 수를 출력하는 함수를 만드시오
 //    -> [[3,3],[1,5],...]
-fun dice6composition(): Array<IntArray> {
-    val RESULT: Array<IntArray> = Array(5, {IntArray(2, {0})})
-    for (i in 1..5) {
-        RESULT[i-1][0] = i
-        RESULT[i-1][1] = 6-i
+fun dice6composition(): List<List<Int>> {
+    val RESULT = mutableListOf<List<Int>>()
+    for (i in 1..6) {
+        if (6-i > 0) {
+            val COMPSITION = listOf<Int>(i, 6-i)
+            RESULT.add(COMPSITION)
+        }
     }
 
     return RESULT
 }
+println(dice6composition())
 
 //7. 배부르기 위해서 먹어야하는 총 밥먹기 횟수, 현재 밥먹은 횟수, 두개를 받는 함수를 만드시오
 //    함수는 "밥을 먹었다" 한번 출력을 할때 마다 밥을 1회 먹은 것으로 간주를 하고,
@@ -65,19 +70,15 @@ fun eat(MAX_CNT: Int, CUR_CNT: Int): Unit {
     val ATE: String = "밥을 먹었다"
     val FULL: String = "배가 부르다"
 
-    if (curCnt == MAX_CNT) {
-        println(ATE)
-        println(FULL)
-        return
-    }
-
-    while (curCnt < MAX_CNT) {
+    do {
         println(ATE)
         curCnt++
-    }
+    } while (curCnt < MAX_CNT)
     println(FULL)
+
     return
 }
+eat(10, 10)
 
 //8. 병사 그룹 2개와 n번째 값을 넣어주면, 각각의 병사 그룹에서 n번째 병사를 제거하고, 두개의 병사
 //    그룹을 합쳐주는 함수를 만드시오
@@ -85,51 +86,68 @@ fun eat(MAX_CNT: Int, CUR_CNT: Int): Unit {
 //    -> [["A", "B", "D", "E"], ["A", "B"]]
 //
 //    (합수 실행이 어려운 조건을 만나면 null을 리턴해야한다)
-//    fun abc( ["A", "B", "C", ,"D", "E"] ,  ["A", "B", "C"], 100)
+//    fun abc( ["A", "B", "C", "D", "E"] ,  ["A", "B", "C"], 100)
 //    -> null
-fun removeAndMerge(ARR_1: Array<String>, ARR_2: Array<String>, index: Int): Array<Array<String>>? {
-    if (!ARR_1.indices.contains(index) || !ARR_2.indices.contains(index)) return null
+fun removeAndMerge(
+    LIST_1: List<String>,
+    LIST_2: List<String>,
+    removeIndex: Int
+): List<List<String>>? {
+    if (!LIST_1.indices.contains(removeIndex) || !LIST_2.indices.contains(removeIndex)) return null
 
-    var newArr1: Array<String>
-    if (index == 0) {
-        newArr1 = ARR_1.sliceArray(1 until ARR_1.size)
-    } else if (index == ARR_1.size) {
-        newArr1 = ARR_1.sliceArray(0 until ARR_1.size-1)
-    } else {
-        newArr1 = ARR_1.sliceArray(0 until index).plus(ARR_1.sliceArray(index+1 until ARR_1.size))
+    var newList1 = mutableListOf<String>()
+    LIST_1.forEachIndexed {index, item ->
+        if (index != removeIndex) newList1.add(item)
     }
 
-    var newArr2: Array<String>
-    if (index == 0) {
-        newArr2 = ARR_2.sliceArray(1 until ARR_2.size)
-    } else if (index == ARR_2.size) {
-        newArr2 = ARR_2.sliceArray(0 until ARR_2.size-1)
-    } else {
-        newArr2 = ARR_2.sliceArray(0 until index).plus(ARR_2.sliceArray(index+1 until ARR_2.size))
+    var newList2 = mutableListOf<String>()
+    LIST_2.forEachIndexed {index, item ->
+        if (index != removeIndex) newList2.add(item)
     }
 
-    return arrayOf(newArr1, newArr2)
+    return listOf(newList1, newList2)
 }
+println(
+    removeAndMerge(
+        LIST_1 = listOf<String>("A", "B", "C", "D", "E"),
+        LIST_2 = listOf<String>("A", "B", "C"),
+        removeIndex = 1
+    )
+)
 
 //9. 단수를 입력 받아 해당 단수의 값을 리스트로 출력하는 함수를 만드시오
 //    fun abc(3)
 //    ->[3,6,9,12,15,18,21,24,27]
-fun googoo(N: Int): IntArray = IntArray(9, {i -> N * (i+1)})
+fun googoo(N: Int): Unit {
+    val RESULT = mutableListOf<Int>()
+    for (i in 1..9) RESULT.add(N * i)
+
+    println(RESULT)
+}
+googoo(3)
 
 //10. 숫자 리스트 두개를 넣어주면 짝수 홀수로 분리된 Map을 만드는 함수를 만드시오
 //    (Map의 키는 짝수의 경우 "짝수", 홀수의 경우 "홀수" 한다)
-fun sortEvenAndOdd(ARR_1: List<Int>, ARR_2: List<Int>): Map<String, List<Int>> {
-    var RESULT = mutableMapOf<String, List<Int>>()
+fun sortEvenAndOdd(LIST_1: List<Int>, LIST_2: List<Int>): Map<String, List<Int>> {
+    val TOTAL_LIST = mutableListOf<Int>()
+    TOTAL_LIST.addAll(LIST_1)
+    TOTAL_LIST.addAll(LIST_2)
+    TOTAL_LIST.sort()
+    val RESULT = mutableMapOf<String, List<Int>>()
 
     val EVEN_LIST = mutableListOf<Int>()
     val ODD_LIST = mutableListOf<Int>()
-    for (num in ARR_1) {
-        if (num % 2 == 0) EVEN_LIST.add(num)
-        else ODD_LIST.add(num)
-    }
-    for (num in ARR_2) {
-        if (num % 2 == 0) EVEN_LIST.add(num)
-        else ODD_LIST.add(num)
+//    for (num in LIST_1) {
+//        if (num % 2 == 0) EVEN_LIST.add(num)
+//        else ODD_LIST.add(num)
+//    }
+//    for (num in LIST_2) {
+//        if (num % 2 == 0) EVEN_LIST.add(num)
+//        else ODD_LIST.add(num)
+//    }
+    TOTAL_LIST.forEach { number ->
+        if (number % 2 == 0) EVEN_LIST.add(number)
+        else ODD_LIST.add(number)
     }
 
     RESULT.put("짝수", EVEN_LIST)
@@ -137,3 +155,6 @@ fun sortEvenAndOdd(ARR_1: List<Int>, ARR_2: List<Int>): Map<String, List<Int>> {
 
     return RESULT
 }
+println(
+    sortEvenAndOdd(listOf<Int>(1,2,3,4,5), listOf<Int>(3,4,5,6,7,8))
+)
