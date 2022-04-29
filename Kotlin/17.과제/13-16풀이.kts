@@ -3,7 +3,7 @@ import java.nio.charset.Charset
 import java.util.*
 
 // 계산기1
-class calculator1 {
+class Calculator1 {
     fun printResult(result: Number): Unit {
         println(result)
     }
@@ -24,12 +24,12 @@ class calculator1 {
         return printResult(num1.toDouble() / num2)
     }
 }
-//val CALC_1 = calculator1()
+//val CALC_1 = Calculator1()
 //CALC_1.plus(1, 3)
 //CALC_1.divide(1, 3)
 
 // 계산기2
-class calculator2(initNumber: Number = 0) {
+class Calculator2(initNumber: Number = 0) {
     var initNumber: Number
     var result: Number
     val operators: Set<Char> = setOf<Char>('+', '-', '*', '/')
@@ -60,7 +60,7 @@ class calculator2(initNumber: Number = 0) {
         else println("잘못된 연산입니다.")
     }
 }
-//val CALC_2 = calculator2(0)
+//val CALC_2 = Calculator2(0)
 //CALC_2.calculate('+', 13)
 //println(CALC_2.result)
 //CALC_2.calculate('/', 10)
@@ -69,7 +69,7 @@ class calculator2(initNumber: Number = 0) {
 //println(CALC_2.result)
 
 // 계산기3
-class calculator3(initNumber: Number = 0) {
+class Calculator3(initNumber: Number = 0) {
     var initNumber: Number
     var result: Number
     val operators: Set<String> = setOf<String>("더하기", "빼기", "곱하기", "나누기")
@@ -132,6 +132,78 @@ class calculator3(initNumber: Number = 0) {
         }
     }
 }
-val CALC_3 = calculator3()
+val CALC_3 = Calculator3()
 CALC_3.calculate("더하기3", "곱하기3", "더하기5", "빼기2", "나누기5")
 println(CALC_3.result)
+
+/******************************************************************/
+
+class Cal1 {
+    var result: Int = 0
+        set(value) {
+            field = value
+            println("중간 계산값: ${field}")
+        }
+
+    fun sum(inputNumber: Int) {
+        result += inputNumber
+    }
+
+    fun minus(inputNumber: Int) {
+        result -= inputNumber
+    }
+
+    fun multiply(inputNumber: Int) {
+        result *= inputNumber
+    }
+
+    fun divide(inputNumber: Int) {
+        result /= inputNumber
+    }
+}
+val calculator1 = Cal1()
+calculator1.sum(10)
+calculator1.divide(2)
+println(calculator1.result)
+
+class Cal2 constructor(val initialValue: Int = 0) {
+    var result: Int
+
+    init {
+        this.result = initialValue
+    }
+
+    fun calculate(operator: Char, inputNumber: Int) {
+        when (operator) {
+            '+' -> this.result += inputNumber
+            '-' -> this.result -= inputNumber
+            '*' -> this.result *= inputNumber
+            '/' -> this.result /= inputNumber
+            else -> println("잘못된 연산입니다.")
+        }
+    }
+}
+
+class Cal3 {
+    var result: Int = 0
+
+    fun calculate(operators: List<Char>, numbers: List<Int>) {
+        operators.forEachIndexed { index, operator ->
+            this._calculate(operator, numbers[index]) // this. 써도 안써도됨. 클래스 안에서만 쓴다는 것을 강조해주는 느낌으로.
+        }
+    }
+
+    // 명명 규칙 _클래스 내부에서만 쓰는 함수
+    fun _calculate(operator: Char, inputNumber: Int) {
+        when (operator) {
+            '+' -> this.result += inputNumber
+            '-' -> this.result -= inputNumber
+            '*' -> this.result *= inputNumber
+            '/' -> this.result /= inputNumber
+            else -> println("잘못된 연산입니다.")
+        }
+    }
+}
+val calculator3 = Cal3()
+calculator3.calculate(listOf<Char>('+', '-'), listOf<Int>(10, 20))
+println(calculator3.result)
